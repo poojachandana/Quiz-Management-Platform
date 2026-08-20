@@ -12,30 +12,8 @@ const statusColors = {
 export default function Quizzes() {
   const [quizzes, setQuizzes] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
 
-  const load = async () => {
-    try {
-      setLoading(true)
-      setError('')
-
-      const res = await quizzesApi.getAllQuizzesAdmin()
-
-      console.log('Admin quizzes response:', res.data)
-
-      setQuizzes(res.data)
-    } catch (err) {
-      console.error('Failed to load admin quizzes:', err)
-      console.error('Response:', err.response?.data)
-
-      setError(
-          err.response?.data?.message ||
-          `Failed to load quizzes (${err.response?.status || 'Unknown error'})`
-      )
-    } finally {
-      setLoading(false)
-    }
-  }
+  const load = () => quizzesApi.getAllQuizzesAdmin().then((res) => setQuizzes(res.data)).finally(() => setLoading(false))
 
   useEffect(() => { load() }, [])
 
@@ -63,13 +41,7 @@ export default function Quizzes() {
       </div>
 
       {loading ? (
-          <div className="text-slate-400 dark:text-slate-500">
-            Loading...
-          </div>
-      ) : error ? (
-          <div className="card text-center py-12 text-red-500">
-            {error}
-          </div>
+        <div className="text-slate-400 dark:text-slate-500">Loading...</div>
       ) : quizzes.length === 0 ? (
         <div className="card text-center py-12 text-slate-400 dark:text-slate-500">No quizzes yet.</div>
       ) : (
