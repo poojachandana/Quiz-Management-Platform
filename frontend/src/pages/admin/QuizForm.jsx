@@ -121,7 +121,19 @@ export default function QuizForm() {
           </div>
           <div>
             <label className="label">Max Attempts</label>
-            <input type="number" min={1} required className="input" value={form.maxAttempts} onChange={(e) => setForm({ ...form, maxAttempts: e.target.value })} />
+            <select
+                className="input"
+                value={form.maxAttempts}
+                onChange={(e) => setForm({ ...form, maxAttempts: e.target.value })}
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={0}>Unlimited</option>
+            </select>
           </div>
         </div>
 

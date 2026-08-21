@@ -34,6 +34,7 @@ export default function QuizDetails() {
   if (!quiz) return <Layout><div className="text-slate-400 dark:text-slate-500">Loading...</div></Layout>
 
   const attemptsUsed = myAttempts.filter((a) => a.status !== 'IN_PROGRESS').length
+  const isUnlimited = quiz.maxAttempts === 0
   const attemptsLeft = quiz.maxAttempts - attemptsUsed
   const canAttempt = attemptsLeft > 0
 
@@ -51,8 +52,8 @@ export default function QuizDetails() {
           <div><span className="text-slate-400 dark:text-slate-500">Difficulty:</span> {quiz.difficulty || '—'}</div>
           <div><span className="text-slate-400 dark:text-slate-500">Duration:</span> {quiz.duration} minutes</div>
           <div><span className="text-slate-400 dark:text-slate-500">Passing Score:</span> {quiz.passingScore}%</div>
-          <div><span className="text-slate-400 dark:text-slate-500">Max Attempts:</span> {quiz.maxAttempts}</div>
-          <div><span className="text-slate-400 dark:text-slate-500">Attempts Used:</span> {attemptsUsed} / {quiz.maxAttempts}</div>
+          <div><span className="text-slate-400">Max Attempts:</span> {isUnlimited ? 'Unlimited' : quiz.maxAttempts}</div>
+          <div><span className="text-slate-400">Attempts Used:</span> {attemptsUsed}{isUnlimited ? '' : ` / ${quiz.maxAttempts}`}</div>
         </div>
 
         {error && <div className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-sm px-4 py-2 rounded-lg mb-4">{error}</div>}

@@ -42,7 +42,8 @@ public class AttemptService {
         }
 
         long previousAttempts = attemptRepository.countByQuizIdAndUserId(quizId, userId);
-        if (previousAttempts >= quiz.getMaxAttempts()) {
+// maxAttempts == 0 is our sentinel value for "unlimited attempts"
+        if (quiz.getMaxAttempts() != 0 && previousAttempts >= quiz.getMaxAttempts()) {
             throw new BadRequestException("You have reached the maximum number of attempts for this quiz");
         }
 
